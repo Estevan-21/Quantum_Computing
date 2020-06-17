@@ -40,7 +40,15 @@ La librería incluye además las siguientes operaciones para vectores y matrices
 - Verificar si una matriz es Hermitian
 - Producto tensor.
 
-## Pruebas
-El proyecto cuenta con un archivo de pruebas llamado Test.py, este archivo tiliza el método Assert que evalúa la igualdadpara comprobar que el resultado esperado sea igual al resultado obtenido.
+## Parte 3
+En el directorio DinamycAndProbabilisticSystems se incluye el archivo DinamycAndProbabilisticSystems, el cual contiene métodos para resolver el Programa simulación de lo clásico a lo cuántico, y resuelve los siguientes problemas:
 
+- Los experimentos de la canicas con coeficiente booleanos
+- Experimentos de las múltiples rendijas clásico probabilístico, con más de dos rendijas.
+- Experimento de las múltiples rendijas cuántico.
+- Función que grafica con un diagrama de barras las probabilidades de un vector de estados.
+
+
+## Pruebas
+El proyecto cuenta con un directorio de pruebas llamado Test, en el directorio se encuentran los archivos LibraryTest.py el cual contiene pruebas para la Librería de números complejos, además del archivo DinamycAndProbabilisticSystemsTest el cual contiene pruebas para los ejercicios de simulación de lo clásico a lo cuántico.
 
