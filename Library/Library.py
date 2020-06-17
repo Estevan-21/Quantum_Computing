@@ -76,7 +76,7 @@ def inverseMatrix(a):
         r.append(inverseVector(a[i]))
     return r
 
-def scalarToMatrix(matrix,num):
+def scalarToMatrix(num,matrix):
     r=[]
     for col in range(0,len(matrix)):
         v=[]
@@ -97,7 +97,7 @@ def conjugateMatrix(a):
     for i in range(len(a)):
         r2=[];
         for j in range(len(a[0])):
-            r1.append(conjugate(a[i][j]));
+            r2.append(conjugate(a[i][j]));
         r.append(r2);
     return r;
 
@@ -107,7 +107,7 @@ def adjoinMatrix(a):
     return r;
 
 def productMatrix(a,b):
-    if a.lenght != b[0].lenght:
+    if len(a) != len(b[0]):
         print ("LAS MATRICES NO SON COMPLATIBLES PARA MULTIPLICAR")
         return -1
     else:
@@ -121,11 +121,11 @@ def productMatrix(a,b):
 def matrixOnVector(matrix,vector):
     result = []
     for i in range(len(matrix)):    
-        v.append(productVector(vector,matrix[i]))
+        result.append(productVector(vector,matrix[i]))
     return result
 
 def productVector(vec1,vec2):
-    res = (0,0)
+    res = (0+0j)
     for i in range(len(vec1)):
         temp = product(vec1[i],vec2[i])
         res = sum(res,temp)
@@ -142,22 +142,23 @@ def internalProduct(vec1,vec2):
 def normVector(a):
     result = 0;
     for i in range(len(a)):
-        for j in range(len(a[0])):
-            result += (a[i][j])**2
+        result += a[i].real **2
+        result += a[i].imag **2
     result = result**0.5
-    return result;
+    return round(result,2)
 
 def distanceVector(vec1,vec2):
-    result = 0;
+    result = 0
     for i in range(len(vec1)):
-        for j in range(len(vec2[0])):
-            temp = vec2[i][j]-vec1[i][j];
-            result += temp**2;
-    result = result**0.5;
-    return round(result,2);
+            temp = vec2[i].real-vec1[i].real
+            temp2 = vec2[i].imag-vec1[i].imag
+            result += temp**2
+            result += temp2**2
+    result = result**0.5
+    return result
 
 def isUnitary(matrix):
-    if matrix.length != matrix[0].length:
+    if len(matrix) != len(matrix[0]):
         print("Matriz no cuadrada")
         return -1
     else:
