@@ -118,10 +118,28 @@ def productMatrix(a,b):
                 result[i][j] = productVector(a[i],col)
         return result
 
+def productRealMatrix(a,b):
+    if len(a) != len(b[0]):
+        print ("LAS MATRICES NO SON COMPLATIBLES PARA MULTIPLICAR")
+        return -1
+    else:
+        result = [[None] * len(b[0]) for i in range(len(a))]
+        for i in range(len(a)):
+            for j in range(len(b[0])):
+                col = [row[j] for row in b]
+                result[i][j] = productVectorReal(a[i],col)
+        return result
+
 def matrixOnVector(matrix,vector):
     result = []
     for i in range(len(matrix)):    
         result.append(productVector(vector,matrix[i]))
+    return result
+
+def matrixOnVectorReal(matrix,vector):
+    result = []
+    for i in range(len(matrix)):
+        result.append(productVectorReal(vector,matrix[i]))
     return result
 
 def productVector(vec1,vec2):
@@ -129,6 +147,13 @@ def productVector(vec1,vec2):
     for i in range(len(vec1)):
         temp = product(vec1[i],vec2[i])
         res = sum(res,temp)
+    return res
+
+def productVectorReal(vec1,vec2):
+    res = 0
+    for i in range(len(vec1)):
+        temp = vec1[i]*vec2[i]
+        res += temp
     return res
 
 def internalProduct(vec1,vec2):
@@ -183,4 +208,15 @@ def tensorProduct(matrix1,matrix2):
             matrix.append(temp[k])
     return matrix
 
+
+def matrixOnVec(matrix1,vector1):
+    cont = 1
+    matrix = [[[0,0] for j in range(1)] for i in range(len(matrix1))]
+    for i in range(len(matrix1)):
+        for j in range(len(vector1[0])):
+            for k in range(len(matrix1[0])):
+                matrix[i][j][0] = matrix[i][j][0] + (matrix1[i][k][0] * vector1[k][j] - matrix1[i][k][1]*vector1[k][j+cont])
+                matrix[i][j][1] = matrix[i][j][1] + (matrix1[i][k][1] * vector1[k][j] + matrix1[i][k][0]*vector1[k][j+cont])
+            break
+    return(matrix)
     
