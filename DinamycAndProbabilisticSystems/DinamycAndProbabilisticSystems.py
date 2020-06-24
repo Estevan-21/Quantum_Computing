@@ -48,6 +48,14 @@ def classicMultipleSlits(matrix,vector,clicks):
     return(res)
 
 
+
+""" Realiza el ensamblaje de dos sistemas clásicos
+     @param matrix1 matriz que posee el primer sistema
+     @param matrix2 matriz que posee el segundo sistema
+     @param vector1 vector que posee el primer sistema
+     @param vector2 vector que posee el segundo sistema
+     @return matrixResult, vectorResult matrix y vector resultantes del ensamblaje de los dos sistemas
+    """
 def systemsAssembly(matrix1,matrix2,vector1,vector2):
     matrixResult = l.tensorProduct(matrix1,matrix2)
     vectorResult = l.tensorProduct(vector1,vector2)[0]
