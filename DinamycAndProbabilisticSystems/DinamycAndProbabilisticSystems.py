@@ -41,10 +41,18 @@ def classicMultipleSlits(matrix,vector,clicks):
         print("The operation cannot be performed.")
     else:
         cont = 1
+        res=vector
         while cont <= clicks:
-            res = l.matrixOnVec(matrix,vector)
+            res = l.matrixOnVectorReal(matrix,res)
             cont += 1
     return(res)
+
+
+def systemsAssembly(matrix1,matrix2,vector1,vector2):
+    matrixResult = l.tensorProduct(matrix1,matrix2)
+    vectorResult = l.tensorProduct(vector1,vector2)[0]
+    return matrixResult,vectorResult
+
 
 
 """ Realiza la simulación del experimento de las múltiples rendijas cuántico
@@ -60,20 +68,23 @@ def quantumMultipleSlits(matrix,vector,clicks):
         print("The operation cannot be performed.")
     else:
         cont = 1
+        res=vector
         while cont <= clicks:
-            res = l.matrixOnVec(matrix,vector)
+            res = l.matrixOnVector(matrix,res)
             cont += 1
+        for i in range(len(res)):
+            res[i] = abs(res[i].real)
     return(res)
 
 
 """ Realiza el gráfico de probabilidades de estados de un vector dado
     @param vector Vector resultado que se desea graficar
     """
-def Graphs(vector):
+def Graphs(vector, title):
     x = np.array([ x for x in range(len(vector))])
-    y = np.array([round(vector[x][0][0]*100,2) for x in range(len(vector))])
+    y = np.array([round(vector[x]*100,2) for x in range(len(vector))])
     plot.bar( x,y , color ='b', align='center')
-    plot.title('Probability of states')
+    plot.title('Probability of states ' + title)
     plot.show()
 
 def Graphs2(vector):
