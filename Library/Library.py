@@ -21,6 +21,9 @@ def module(a):
 def conjugate(a):
     return a.conjugate()
 
+def norm(a):
+    return (a.real**2 + a.imag**2)
+
 def phase(a):
     rad = math.atan(a.imag/a.real)
     return round(math.degrees(rad),2)
@@ -117,6 +120,15 @@ def productMatrix(a,b):
                 col = [row[j] for row in b]
                 result[i][j] = productVector(a[i],col)
         return result
+
+def matriz_Transpuesta(matriz1):
+    filas = len(matriz1)
+    columnas = len(matriz1[0])
+    matrizTranspuesta = [[[0,0] for j in range(filas)]for i in range(columnas)]
+    for i in range(columnas):
+        for j in range(filas):
+            matrizTranspuesta[i][j] = matriz1[j][i]
+    return matrizTranspuesta
 
 def productRealMatrix(a,b):
     if len(a) != len(b[0]):
@@ -219,4 +231,74 @@ def matrixOnVec(matrix1,vector1):
                 matrix[i][j][1] = matrix[i][j][1] + (matrix1[i][k][1] * vector1[k][j] + matrix1[i][k][0]*vector1[k][j+cont])
             break
     return(matrix)
+
+def Multicomplejos(a,b):
+    return((a[0]*b[0] - a[1]*b[1]) , (a[1]*b[0] + a[0]*b[1]))
+
+def sumComplejos(a,b):
+    return (a[0]+b[0], a[1]+b[1])
+
+def matrix_conjugate(matrix,value):
+    if value == 1:
+        matriz_Conjugada = [[[0,0] for j in range(len(matrix))] for i in range(len(matrix))]
+        for i in range(len(matrix)):
+            for j in range(len(matrix)):
+                    matriz_Conjugada[i][j][0] = matrix[i][j][0]
+                    matriz_Conjugada[i][j][1] = matrix[i][j][1] * -1
+        return matriz_Conjugada
+    else:
+        vectorEsca = [[[0,0] for j in range(1)] for i in range(len(matrix))]
+        for i in range(len(matrix)):
+            for j in range(1):
+                vectorEsca[i][j][0] = matrix[i][0]
+                vectorEsca[i][j][1] = matrix[i][1] * -1
+        return vectorEsca
     
+def internal_product(v1,v2):
+    cont = [0,0]
+    lista = []
+    v22 = [[(v2[j][0],v2[j][1]) for j in range(len(v2))] for i in range(1)]
+    for i in range(len(v1)):
+        for j in range(len(v1)):
+            primera = Multicomplejos(v1[j][i],v2[j])
+            lista.append(primera)
+        break
+    for i in range(len(lista)):
+        cont = sumComplejos(cont,lista[i])
+    return cont
+
+def makevect(v1,x):
+    cont = 0
+    vector = [[0,0] for i in range(x)]
+    for i in range(len(vector)):
+        if cont <= 2:
+            cont += 1
+            for j in range(len(vector)):
+                if cont <= 2:
+                    vector[j][i] = v1[j][0][i]
+    return vector
+
+def conjugate_matrix(matriz1,valor):
+    if valor == 1:
+        matriz_Conjugada = [[[0,0] for j in range(len(matriz1))] for i in range(len(matriz1))]
+        for i in range(len(matriz1)):
+            for j in range(len(matriz1)):
+                    matriz_Conjugada[i][j][0] = matriz1[i][j][0]
+                    matriz_Conjugada[i][j][1] = matriz1[i][j][1] * -1
+        return matriz_Conjugada
+    else:
+        vectorEsca = [[[0,0] for j in range(1)] for i in range(len(matriz1))]
+        for i in range(len(matriz1)):
+            for j in range(1):
+                vectorEsca[i][j][0] = matriz1[i][0]
+                vectorEsca[i][j][1] = matriz1[i][1] * -1
+        return vectorEsca
+
+def matriz_Producto(m1,m2):
+    matrizProducto = [[[0,0] for j in range(len(m1))] for i in range(len(m1))]
+    for i in range(len(m1)):
+        for j in range(len(m1)):
+            for k in range(len(m1[0])):
+                matrizProducto[i][j][0] = matrizProducto[i][j][0] + (m1[i][k][0] * m2[k][j][0] - m1[i][k][1]*m2[k][j][1])
+                matrizProducto[i][j][1] = matrizProducto[i][j][1] + (m1[i][k][1] * m2[k][j][0] + m1[i][k][0]*m2[k][j][1])
+    return matrizProducto
