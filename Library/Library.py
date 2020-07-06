@@ -73,6 +73,15 @@ def sumMatrix(a,b):
         r.append(r2);
     return r;
 
+def restMatrix(a,b):
+    r=[];
+    for i in range(len(a)):
+        r2=[];
+        for j in range(len(a)):
+            r2.append(rest(a[i][j],b[i][j]));
+        r.append(r2);
+    return r;
+
 def inverseMatrix(a):
     r=[]
     for i in range(len(a)):
@@ -102,6 +111,12 @@ def conjugateMatrix(a):
         for j in range(len(a[0])):
             r2.append(conjugate(a[i][j]));
         r.append(r2);
+    return r;
+
+def conjugateVector(a):
+    r=[];
+    for i in range(len(a)):
+        r.append(conjugate(a[i]));
     return r;
 
 def adjoinMatrix(a):
