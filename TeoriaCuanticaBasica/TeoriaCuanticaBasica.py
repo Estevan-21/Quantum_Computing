@@ -76,29 +76,26 @@ def probabilidadTransitoSistema(observable, vectorB):
     amplitudesT = [0 for j in range(len(vectoresTP))]
     for i in range(len(vectoresTP)):
         normvB = normalizarVector(vectorB)
-        normVTP = normalizarVector(vectoresTP[0])
+        normVTP = normalizarVector(vectoresTP[1])
         amplitudesT[i] = l.internalProduct(normvB, normVTP)
-    print("Vector propio a transitar:", vectoresTP[0])
+    print("Vector propio a transitar:", vectoresTP[1])
     probabilidades = [0 for j in range(len(amplitudesT))]
     for i in range(len(amplitudesT)):
         probabilidades[i] = l.norm(amplitudesT[i])**2
     return probabilidades
 
-def dynamic(un,init,steps):
-    """ Recibo Matriz compleja
+def dynamic(uns,init):
+    """ Recibo Vector de Matrices complejas
                vector estado inicial
                Pasos hasta donde llega el sistema
     """
-    up=[un]
-    ur=un
-    for p in range(steps):
-        ur=l.productMatrix(ur,ur)
-        up.append(ur)
-    un1=[]
-    for k in range(len(up)):
-        un1=l.productMatrix(up[k],up[k-1])
-    temp=l.matrixOnVector(un1,init)
-    return temp
+    ur=[]
+    for n in range(len(uns)):
+        if n == 0:
+            ur = uns[0]
+        else:
+            ur = l.productMatrix(uns[n], ur)
+    return l.matrixOnVector(ur,init)
 
 
 

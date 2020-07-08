@@ -1,5 +1,6 @@
 from TeoriaCuanticaBasica import TeoriaCuanticaBasica as T
 import unittest
+import math
 
 
 
@@ -22,14 +23,8 @@ test3()
 
 # Sistema dinamico
 def test3():
-    assert([0,0,0,0.16666666666666666,0.16666666666666666,0.3333333333333333,0.16666666666666666,0.16666666666666666] ==
-                T.dynamic([   [0, 0, 0, 0, 0, 0, 0, 0],
-                              [0.5, 0, 0, 0, 0, 0, 0, 0],
-                              [0.5, 0, 0, 0, 0, 0, 0, 0],
-                              [0, 0.3333333333333333, 0, 1, 0, 0, 0, 0],
-                              [0, 0.3333333333333333, 0, 0, 1, 0, 0, 0],
-                              [0, 0.3333333333333333, 0.3333333333333333, 0, 0, 1, 0, 0],
-                              [0, 0, 0.3333333333333333, 0, 0, 0, 1, 0],
-                              [0, 0, 0.3333333333333333, 0, 0, 0, 0, 1]],
-                              [ 1, 0, 0, 0, 0, 0, 0, 0], 2))
+    matrix1 = [[0,1/math.sqrt(2),1/math.sqrt(2),0], [1j/math.sqrt(2), 0, 0, 1/math.sqrt(2)], [1/math.sqrt(2), 0 , 0, 1j/math.sqrt(2)], [0,1/math.sqrt(2),-1/math.sqrt(2),0]]
+    uns = [matrix1, matrix1, matrix1]
+    vect = [1, 0, 0, 0]
+    print("Dinamica",T.dynamic(uns,vect))
 test3()
