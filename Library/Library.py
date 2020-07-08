@@ -22,7 +22,7 @@ def conjugate(a):
     return a.conjugate()
 
 def norm(a):
-    return (a.real**2 + a.imag**2)
+    return (math.sqrt(a.real**2 + a.imag**2))
 
 def phase(a):
     rad = math.atan(a.imag/a.real)
@@ -184,10 +184,10 @@ def productVectorReal(vec1,vec2):
     return res
 
 def internalProduct(vec1,vec2):
-    r = [0,0]
+    r = complex(0,0)
     for i in range(len(vec1)):
-        c = conjugate(vec1[0]);
-        s = product(c,vec2[i]);
+        c = conjugate(vec2[i])
+        s = product(c,vec1[i])
         r = sum(r,s)
     return r;
 
@@ -270,9 +270,8 @@ def matrix_conjugate(matrix,value):
         return vectorEsca
     
 def internal_product(v1,v2):
-    cont = [0,0]
+    cont = (0,0)
     lista = []
-    v22 = [[(v2[j][0],v2[j][1]) for j in range(len(v2))] for i in range(1)]
     for i in range(len(v1)):
         for j in range(len(v1)):
             primera = Multicomplejos(v1[j][i],v2[j])

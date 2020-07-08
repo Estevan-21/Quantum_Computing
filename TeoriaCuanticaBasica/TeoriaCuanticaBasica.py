@@ -1,14 +1,10 @@
-from numpy import linalg as LA
 from Library import Library as l
 import numpy as np
 import math
 
 def normaVector(v1):
-    suma=0
-    for i in range(len(v1)):
-        suma+=(v1[i].real**2)+(v1[i].imag**2)
-    norma=math.sqrt(suma)
-    return (norma)
+    internal = l.internalProduct(v1,v1)
+    return (math.sqrt(internal.real))
 
 def normalizarVector(vk):
     vkNormalizado = []
@@ -72,49 +68,37 @@ def position_transition(V, p, V2):
     deno = norm1f * norm2f
     return [prob, complex((total.real / deno), (total.imag / deno))]
 
-def propios(X, V):
-    a = [X,V]
-    w, v = LA.eigh(a)
-    prop = v[0]
-    total = (0, 0)
-    norm1 = 0
-    norm2 = 0
-    V1 = V
-    for z, y in zip(V1, prop):
-        total = l.sum(total, l.product(z, y))
-        norm1 += (z.real ** 2) + (z.imag ** 2)
-        norm2 += (y.real ** 2) + (y.imag ** 2)
+def probabilidadTransitoSistema(observable, vectorB):
+    valoresP, vectoresP = np.linalg.eigh(observable)
+    vectoresTP = l.transposedMatrix(vectoresP)
+    print("Valores Propios:",valoresP)
+    print("Vectores Propios: ",vectoresTP)
+    amplitudesT = [0 for j in range(len(vectoresTP))]
+    for i in range(len(vectoresTP)):
+        normvB = normalizarVector(vectorB)
+        normVTP = normalizarVector(vectoresTP[0])
+        amplitudesT[i] = l.internalProduct(normvB, normVTP)
+    print("Vector propio a transitar:", vectoresTP[0])
+    probabilidades = [0 for j in range(len(amplitudesT))]
+    for i in range(len(amplitudesT)):
+        probabilidades[i] = l.norm(amplitudesT[i])**2
+    return probabilidades
 
-    norm1f = norm1 ** (1 / 2)
-    norm2f = norm2 ** (1 / 2)
-    deno = norm1f * norm2f
-    return("Valores propios",w,"Vectores propios",v,"Probabilidad de transicion",complex(total[0]/deno, total[1]/deno))
-
-
-def dynamic(X, V, n):
-    Y = X
-    result = [[0 for j in range(len(X))] for i in range(len(Y[0]))]
-    ssum = complex(0, 0)
-    for t in range(n):
-        for i in range(len(X)):
-            for j in range(len(Y[0])):
-                for k in range(len(Y)):
-                    result[i][j] = l.sum(ssum, l.product(X[i][k], Y[k][j]))
-                    ssum = result[i][j]
-                ssum = complex (0, 0)
-        Y = result
-
-    result2 = [[0 for j in range(len(X))] for i in range(len(Y[0]))]
-    ssum2 = complex(0, 0)
-    X = result
-    Y = V
-    for i in range(len(X)):
-        for j in range(len(Y[0])):
-            for k in range(len(Y)):
-                result[i][j] = l.sum(ssum2, l.product(X[i][k], Y[k][j]))
-                ssum2 = result[i][j]
-            ssum2 = complex(0, 0)
-    return result2
+def dynamic(un,init,steps):
+    """ Recibo Matriz compleja
+               vector estado inicial
+               Pasos hasta donde llega el sistema
+    """
+    up=[un]
+    ur=un
+    for p in range(steps):
+        ur=l.productMatrix(ur,ur)
+        up.append(ur)
+    un1=[]
+    for k in range(len(up)):
+        un1=l.productMatrix(up[k],up[k-1])
+    temp=l.matrixOnVector(un1,init)
+    return temp
 
 
 

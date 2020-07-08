@@ -1,6 +1,7 @@
 from ObservablesYMedidas import ObservablesYMedidas as o
 from Library import Library as l
 from DinamycAndProbabilisticSystems import DinamycAndProbabilisticSystems as d
+import math
 
 # Excercise 4.3.1
 def test_possible_states():
@@ -13,19 +14,18 @@ def test_possible_states():
     print('Vectores propios de Sz =',  o.expected_values(sz,2))
 
 test_possible_states()
-
+#
 # Excercise 4.3.2
 def test_transicion_probability():
-    v1 = [[1, 0], [0, 0]]
-    v2 = [[0, 0], [1, 0]]
-    sx = [[0, 1], [1, 0]]
-    sy = [[0, -1j], [1j, 0]]
-    sz = [[1, 0], [0, -1]]
+    v1, v2 = [-0.923j, -0.382], [-0.382j, 0.923]
+    vSx = [[-1, 1], [1, 1]]
+    vSy = [[-1j, 1], [1j, 1]]
+    vSz = [[0, 1], [1, 0]]
     print("\n-----4.3.2-----------")
-    print("Probabilidad de [1, 0], [0, 0] pasar a [0, 1], [1, 0]", o.probability(v1, v2, sx, 1))
-    print("Probabilidad de [1, 0], [0, 0] pasar a [0, -1], [1, 0]", o.probability(v1, v2, sx, 2))
-    print("Probabilidad de [0, 0], [1, 0] pasar a [0, 1], [1, 0]",o.probability(v1, v2, sx, 3))
-    print("Probabilidad de [0, 0], [1, 0] pasar a [0, -1], [1, 0]",o.probability(v1, v2, sx, 4))
+    print("Probabilidad de transitar a [-1, 1], observable Sx", o.probability(v1, v2, vSx,0))
+    print("Probabilidad de transitar a [1, 1], observable Sx", o.probability(v1, v2, vSx,1))
+    print("Probabilidad de transitar a [-1i, 1], observable Sy",o.probability(v1, v2, vSy,0))
+    print("Probabilidad de transitar a [1i, 1], observable Sy",o.probability(v1, v2, vSy,1))
 
 test_transicion_probability()
 
